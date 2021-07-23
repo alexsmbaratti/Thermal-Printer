@@ -7,7 +7,7 @@
 * Raspberry Pi (recommended)
 
 ### Files Needed
-* Adafruit_Thermal.py
+* [Adafruit_Thermal.py](https://github.com/adafruit/Python-Thermal-Printer/blob/master/Adafruit_Thermal.py) (Place this file in the same directory as `main.py`)
 
 ### Running
 ```bash
