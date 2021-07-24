@@ -38,15 +38,26 @@ def print_library_size(count):
 
 def print_library_entry(entry):
     addDate = str(months[entry['month']]) + ' ' + str(entry['day']) + ', ' + str(entry['year'])
+    condition = 'New' if entry['new'] == 1 else 'Used'
+    box = 'Yes' if entry['box'] == 1 else 'No'
+    manual = 'Yes' if entry['manual'] == 1 else 'No'
+
+    cost = '$' + str(entry['cost'])
 
     init()
+    printer.justify('C')
     printer.setSize('M')
     printer.println(entry['title'])
     printer.setSize('S')
     printer.boldOn()
     printer.println(entry['platform'])
     printer.boldOff()
-    printer.println(entry['edition'])
+    printer.justify('L')
+    printer.feed(1)
+    printer.println(entry['edition'] + '\t\t' + cost)  # TODO: Strikethrough MSRP if cost is lower
+    printer.println("\tCondition: " + str(condition))
+    printer.println("\tBox: " + str(box))
+    printer.println("\tManual: " + str(manual))
     printer.println("Added on " + addDate)
     printer.feed(1)
     printer.justify('C')
