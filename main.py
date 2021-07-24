@@ -21,14 +21,14 @@ def print_library_count():
     return str(count)
 
 
+@app.route('/api/pixel-shelf/library/<id>', methods=['POST'])
+def print_library_entry_from_id(id):
+    entry = api_utils.getLibraryEntry(id)
+    print_utils.print_library_entry(entry)
+    return str(200)
+
+
 @app.route('/api/pixel-shelf/library', methods=['POST'])
 def print_library_entry():
     # TODO: Read request body and print a library entry based on the request body
     return str(501)
-
-
-@app.route('/api/pixel-shelf/library/<id>', methods=['POST'])
-def print_library_entry(id):
-    entry = api_utils.getLibraryEntry(id)
-    print_utils.print_library_entry(entry)
-    return str(200)
