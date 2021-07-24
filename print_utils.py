@@ -51,3 +51,7 @@ def print_library_entry(entry):
         printer.setBarcodeHeight(100)
         printer.printBarcode(entry['upc'], printer.UPC_A)
     flush()
+
+
+def has_paper():
+    return printer.has_paper()
