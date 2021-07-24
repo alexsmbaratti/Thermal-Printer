@@ -1,4 +1,5 @@
 from Adafruit_Thermal import *
+from datetime import date
 
 printer = Adafruit_Thermal("/dev/ttyUSB0", 9600, timeout=3000)
 
@@ -8,13 +9,17 @@ months = ["N/A", "January", "February", "March", "April", "May", "June", "July",
 
 def init():
     printer.feed(1)
+    printer.underlineOff()
+    printer.boldOff()
 
 
 def flush():
+    today = date.today()
+
     printer.setSize('S')
     printer.justify('C')
     printer.println("Pixel Shelf")
-    printer.println("Generated on ")
+    printer.println("Generated on " + str(today.strftime("%B %d, %Y")))
     printer.feed(2)
     printer.sleep()
     printer.wake()
@@ -42,9 +47,7 @@ def print_library_entry(entry):
     printer.println(entry['platform'])
     printer.boldOff()
     printer.println(entry['edition'])
-    printer.underlineOn()
     printer.println("Added on " + addDate)
-    printer.underlineOff()
     printer.feed(1)
     printer.justify('C')
     if entry['upc']:
