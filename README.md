@@ -14,3 +14,7 @@
 export FLASK_APP=main
 flask run --host=0.0.0.0
 ```
+
+## Current Capabilities
+### Pixel Shelf
+Works with Pixel Shelf to print receipts of individual library entries (can be stashed in game cases) or to print out the size of the game library.

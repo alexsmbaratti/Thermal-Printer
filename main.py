@@ -8,10 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    if print_utils.has_paper():
-        return str(200)
-    else:
-        return str(410)  # Out of paper status code
+    return str(200)
 
 
 @app.route('/api/pixel-shelf/library/size', methods=['POST'])
