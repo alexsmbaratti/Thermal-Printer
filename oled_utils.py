@@ -22,9 +22,6 @@ def display_title():
 
 def display_idle():
     init()
-    display_title()
-    draw.text((0, padding + 8), "Idle...", font=font, fill=255)
-
     disp.image(image)
     disp.show()
 
