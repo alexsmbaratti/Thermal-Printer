@@ -1,11 +1,9 @@
 from Adafruit_Thermal import *
 from datetime import date
+from datetime import datetime
+import json
 
 printer = Adafruit_Thermal("/dev/ttyUSB0", 9600, timeout=3000)
-
-months = ["N/A", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-          "November", "December"]
-
 
 def init():
     printer.feed(1)
@@ -38,33 +36,36 @@ def print_library_size(count):
 
 
 def print_library_entry(entry):
-    addDate = str(entry['timestamp'].strftime("%B %d, %Y"))
-    condition = 'New' if entry['new'] == 1 else 'Used'
-    box = 'Yes' if entry['box'] == 1 else 'No'
-    manual = 'Yes' if entry['manual'] == 1 else 'No'
+    library_json = json.loads(entry)
 
-    cost = '$' + str(entry['cost'])
+    addDate = datetime.strptime(str(library_json['date']), '%Y-%m-%dT%H:%M:%S.%f%z')
+    condition = 'New' if library_json['new'] == 1 else 'Used'
+    box = 'Yes' if library_json['box'] == 1 else 'No'
+    manual = 'Yes' if library_json['manual'] == 1 else 'No'
+    gift = 'Yes' if library_json['gift'] == 1 else 'No'
+
+    cost = '$' + str(library_json['cost']) # TODO: Handle currency
 
     init()
     printer.justify('C')
     printer.setSize('M')
-    printer.println(entry['title'])
+    printer.println(library_json['title'])
     printer.setSize('S')
     printer.boldOn()
-    printer.println(entry['platform'])
+    printer.println(library_json['platform'])
     printer.boldOff()
     printer.justify('L')
     printer.feed(1)
-    printer.println(entry['edition'] + '\t\t' + cost)  # TODO: Strikethrough MSRP if cost is lower
+    printer.println(library_json['edition'] + '\t\t' + cost)  # TODO: Strikethrough MSRP if cost is lower
     printer.println("\tCondition: " + str(condition))
     printer.println("\tBox: " + str(box))
     printer.println("\tManual: " + str(manual))
-    printer.println("Added on " + addDate)
+    printer.println("Added on " + str(addDate.strftime("%B %d, %Y")))
     printer.feed(1)
     printer.justify('C')
-    if entry['upc']:
+    if library_json['upc']:
         printer.setBarcodeHeight(100)
-        printer.printBarcode(entry['upc'], printer.UPC_A)
+        printer.printBarcode(library_json['upc'], printer.UPC_A)
     flush()
 
 
