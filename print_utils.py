@@ -32,12 +32,13 @@ def print_library_size(count):
     printer.setSize('S')
     printer.println('Library Size')
     printer.setSize('L')
+#     TODO: Breakdown library size by physical/digital
     printer.println(str(count))
     flush()
 
 
 def print_library_entry(entry):
-    addDate = str(months[entry['month']]) + ' ' + str(entry['day']) + ', ' + str(entry['year'])
+    addDate = str(entry['timestamp'].strftime("%B %d, %Y")))
     condition = 'New' if entry['new'] == 1 else 'Used'
     box = 'Yes' if entry['box'] == 1 else 'No'
     manual = 'Yes' if entry['manual'] == 1 else 'No'
